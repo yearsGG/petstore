@@ -1,10 +1,12 @@
 package com.example.dao;
 
-import org.junit.jupiter.api.Test;
 import com.example.domain.Pet;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PetDaoTest {
     private PetDao petDao;

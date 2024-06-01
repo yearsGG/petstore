@@ -1,33 +1,33 @@
-<%@ page import="java.util.List" %>
-<%@ page import="com.example.domain.Pet" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="ctx" value="${pageContext.request.contextPath}"/>
-<!DOCTYPE html>
-<%@ page import="com.example.domain.*" %>
-<%@ page import="com.example.utils.JDBCUtils" %>
-<%@ page import="java.util.List" %>
-<html>
-<head>
-    <meat charset="UTF-8">
-        <link rel="stylesheet" href="css/bootstrap-4.6.1.min.css"/>
-        <link rel="stylesheet" hrdf="css/font-awesome-3.2.1.min.css"/>
-        <link rel="stylesheet" href="css/site.css"/>
-        <script src="js/jquery-3.6.0.min.js"></script>
-    </meat>
-    <title>宠物商店</title>
-</head>
-<body>
-    <div class="d-flex flex-column flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-        <img src="img/logo.png" width="64" height="64" class="mb-2">
-        <h5 class="my-0 mr-md-auto font-weight-normal">宠物商店</h5>"
-        <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" href="#">首页</a>
-            <a class="p-2 text-dark" href="#">购物车</a>
-            <a class="p-2 text-dark" href="#">联系客服</a>
-        </nav>
-    </div>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ include file="header.jsp"%>
+<%@ include file="lunbo.jsp"%>
     <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-1">
+            <a class="navbar-brand" href="${ctx}/IndexServlet?category_id=0">全部分类</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <c:forEach items="${categoryList}" var="category">
+                        <c:if test="${category.id == current_category_id}">
+                            <%--与参数 current_category_id 相等的分类名称，设置为选中状态,添加样式类名 active--%>
+                            <li class="nav-item active">
+                                <a class="nav-link bg-white" href="${ctx}/IndexServlet?category_id=${category.id}">
+                                    <b>${category.name}</b>
+                                </a>
+                            </li>
+                        </c:if>
+                        <c:if test="${category.id != current_category_id}">
+                            <li class="nav-item">
+                                <a class="btn btn-light" href="${ctx}/IndexServlet?category_id=${category.id}">${category.name}</a>
+                            </li>
+                        </c:if>
+                    </c:forEach>
+                </ul>
+                <form class="form-inline my-2 my-lg-0" action="${ctx}/SearchServlet" method="post" >
+                    <input class="form-control mr-sm-2" type="text" name="key" placeholder="关键字">
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">查询</button>
+                </form>
+            </div>
+        </nav>
         <div class="card-deck mb-3 text-center">
                 <c:forEach items="${petList}" var="pet">
                     <div class="card mb-4 shadow-sm">
@@ -49,33 +49,4 @@
                 </c:forEach>
         </div>
     </div>
-    <footer class="footer mt-1 py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md">
-                    <img src="img/logo.png" width="24" height="24" class="mb-2">
-                    <small class="d-block mb-3 text-muted">@ 2023</small>
-                </div>
-                <div class="col-6 col-md">
-                    <h5>详情备案信息</h5>
-                    <ul class="list-unstyled txet-small">
-                        <li><a class="text-muted" href="#">备案号</a> </li>
-                    </ul>
-                </div>
-                <div class="col-6 col-md">
-                    <h5>详情工商信息</h5>
-                    <ul class="list-unstyled txet-small">
-                        <li><a class="text-muted" href="#">商业资质</a> </li>
-                    </ul>
-                </div>
-                <div class="col-6 col-md">
-                    <h5>关于我们团队</h5>
-                    <ul class="list-unstyled txet-small">
-                        <li><a class="text-muted" href="#">Geely最强项目团队</a> </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+<%@ include file="footer.jsp"%>

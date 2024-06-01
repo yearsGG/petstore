@@ -6,7 +6,7 @@
     <div class="col-9">
         <div class="card">
             <div class="card-header">
-                <h6>宠物管理</h6>
+                <h6>游戏管理</h6>
             </div>
             <div class="card-body">
                 <div class="form-group col-12">

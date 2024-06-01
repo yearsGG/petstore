@@ -1,0 +1,156 @@
+<!--HTTP/1.1 200 OK-->
+<!--X-XSS-Protection: 1; mode=block-->
+<!--X-Powered-By:-->
+<!--P3P: CP="CAO PSA OUR"-->
+<!--Pragma: no-cache-->
+<!--Cache-Control: no-cache-->
+<!--Expires: Thu, 01 Jan 1970 00:00:00 GMT-->
+<!--Pragma: no-cache-->
+<!--Cache-Control: no-cache-->
+<!--Content-Type: text/html;charset=gbk-->
+<!--Content-Length: 5470-->
+<!--Date: Sat, 01 Jun 2024 03:09:56 GMT-->
+<!--Connection: close-->
+<!--Server:-->
+
+
+
+
+
+
+
+
+<HTML>
+<HEAD>
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="pragma" content="no-cache">
+    <title>
+        校园网自助服务系统
+    </title>
+    <style>
+        .showDiv{
+            position: absolute;
+            border: 1px solid #72A9E0;
+            border-radius:4px;
+            background:#F3F8FA;
+            padding:3px;
+            width:100px;
+            font-size: 12;
+        }
+    </style>
+    <script type="text/javascript">
+
+        var mouseDownAndUp = false;//拖动事件的标记
+        function resize(){
+            document.body.children[0].height = document.body.offsetHeight;
+            //拖拽功能(主要是触发三个事件：onmousedown\onmousemove\onmouseup)
+            var drag = document.getElementById('shandiantu');
+            var hint = document.getElementById('showHint');
+            //闪电兔的位置
+            drag.style.left = parseInt(document.body.offsetWidth) -20-80 +'px';
+            drag.style.top = parseInt(document.body.offsetHeight) -20-80 +'px';
+            //提示文字的位置
+            hint.style.left=parseInt(drag.style.left)-100+'px';
+            hint.style.top=parseInt(drag.style.top)-35+'px';
+            //新打开页面，提示文字闪烁4次
+            var timer=null;
+            var i=0;
+            clearInterval(timer);
+            timer=setInterval(function(){
+                hint.style.display = i%2 ? "none" : "block";//还是有收获的，这个写法比if..else想必简单了好多
+                drag.style.display = i%2 ? "none" : "block";//还是有收获的，这个写法比if..else想必简单了好多
+                i++;
+                i > 6 && clearInterval(timer);//这个短路用的经典啊
+            },400);
+
+            var startTime = null;//在图标上按下鼠标的毫秒数
+            var endTime = null;//在图标上抬起鼠标的毫秒数
+
+            //点击某物体时，用drag对象即可，move和up是全局区域，也就是整个文档通用，应该使用document对象而不是drag对象(否则，采用drag对象时物体只能往右方或下方移动)
+            drag.onmousedown = function(e) {
+                startTime = new Date().getTime();
+
+                var e = e || window.event; //兼容ie浏览器
+                var diffX = e.clientX - drag.offsetLeft; //鼠标点击物体那一刻相对于物体左侧边框的距离=点击时的位置相对于浏览器最左边的距离-物体左边框相对于浏览器最左边的距离
+                var diffY = e.clientY - drag.offsetTop;
+
+                /*低版本ie bug:物体被拖出浏览器可是窗口外部时，还会出现滚动条，
+                    解决方法是采用ie浏览器独有的2个方法setCapture()\releaseCapture(),这两个方法，
+                    可以让鼠标滑动到浏览器外部也可以捕获到事件，而我们的bug就是当鼠标移出浏览器的时候，
+                    限制超过的功能就失效了。用这个方法，即可解决这个问题。注：这两个方法用于onmousedown和onmouseup中*/
+                if(typeof drag.setCapture!='undefined'){
+                    drag.setCapture();
+                }
+
+                document.onmousemove = function(e) {
+                    var e = e || window.event; //兼容ie浏览器
+                    var left=e.clientX-diffX;
+                    var top=e.clientY-diffY;
+
+                    //控制拖拽物体的范围只能在浏览器视窗内，不允许出现滚动条
+                    if(left<0){
+                        left=0;
+                    }else if(left >window.innerWidth-drag.offsetWidth){
+                        left = window.innerWidth-drag.offsetWidth;
+                    }
+                    if(top<0){
+                        top=0;
+                    }else if(top >window.innerHeight-drag.offsetHeight){
+                        top = window.innerHeight-drag.offsetHeight;
+                    }
+
+                    //移动时重新得到物体的距离，解决拖动时出现晃动的现象
+                    drag.style.left = left+ 'px';
+                    drag.style.top = top + 'px';
+                    drag.style.cursor = 'move';
+                    drag.style.border = 'dashed 1px red';
+                };
+                document.onmouseup = function(e) { //当鼠标弹起来的时候不再移动
+                    endTime = new Date().getTime();
+                    if(endTime - startTime > 200){//如果按下鼠标到到抬起鼠标超过200毫秒，就认为是拖动动作
+                        mouseDownAndUp = true;
+                    }
+                    this.onmousemove = null;
+                    this.onmouseup = null; //预防鼠标弹起来后还会循环（即预防鼠标放上去的时候还会移动）
+                    drag.style.cursor = '';
+                    drag.style.border = '';
+                    e.stopPropagation();
+                    //修复低版本ie bug
+                    if(typeof drag.releaseCapture!='undefined'){
+                        drag.releaseCapture();
+                    }
+                };
+            };
+        }
+        function showTip(){
+            var robot = document.getElementById('shandiantu');
+            document.getElementById('showHint').style.display="block";
+            robot.style.cursor = 'pointer';
+            var hintLeft = ((parseInt(robot.style.left)-100) < 0) ? 0 : parseInt(robot.style.left)-100;
+            var hintTop = ((parseInt(robot.style.top)-35) < 0) ? 0 :parseInt(robot.style.top)-35;
+            document.getElementById('showHint').style.left=hintLeft+'px';
+            document.getElementById('showHint').style.top=hintTop+'px';
+        }
+        function hiddenTip(){
+            document.getElementById('showHint').style.display="none";
+        }
+        function gotoClient(){
+            if(!mouseDownAndUp){
+                window.open("https://ocs.ruijie.com.cn/?p=software&enterurl=%E8%BD%AF%E4%BB%B6%23SAM%23RG-%2B+ENTERPRISE_4.21%28p15%29_Build20210818");
+            }else{
+                mouseDownAndUp = false;
+            }
+        }
+    </script>
+</HEAD>
+<body style="padding: 0px; border: 0px; margin: 0px;width: 100%;height: 100%;overflow:hidden;" onresize="resize()" onload="resize()" scroll="no">
+<iframe src="entry.jsp" NAME="main" frameborder="0" SCROLLING="auto" id="entry" width="100%" height="100%" style="margin: 0px;border: 0px;"></iframe>
+
+</body>
+<!-- <frameset id="frameset" BORDER="0" FRAMESPACING="0" FRAMEBORDER="0" rows="0,*,0" scrolling="auto" style="margin: 0px;border: 0px;padding: 0px;height: 100%;width:100%">
+<frame NAME="smallframe" frameborder="0" SCROLLING="no" noresize="true" marginwidth="0" marginheight="0" style="margin: 0px;border:0px;">
+<frame src="entry.jsp" NAME="main" frameborder="0" SCROLLING="auto" id="entry" style="margin: 0px;border: 0px;">
+<frame NAME="smallframe2" frameborder="0" SCROLLING="no" noresize="true" marginwidth="0" marginheight="0" style="margin: 0px;border:0px;">
+</frameset> -->
+</HTML>

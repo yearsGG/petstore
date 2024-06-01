@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 定义数据库环境配置，默认使用mysql环境 -->
+    <environments default="mysql">
+        <!-- mysql环境配置 -->
+        <environment id="mysql">
+            <!-- 使用JDBC事务管理器 -->
+            <transactionManager type="JDBC"/>
+            <!-- 配置数据源为连接池类型 -->
+            <dataSource type="POOLED">
+                <!-- 配置数据库连接信息 -->
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/petstore?serverTimezone=UTC"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!-- 映射器配置，指定mapper接口的位置 -->
+    <mappers>
+        <!-- 这里可以通过package标签来指定mapper接口所在的包，当前注释掉了 -->
+        <!-- <package name="org.example.mapper"/> -->
+        <!-- 指定mapper文件的位置 -->
+        <mapper resource="pinglun.xml"/>
+    </mappers>
+
+</configuration>

@@ -12,9 +12,17 @@ public class Pet {
     private int stock;
     private Date ondate;
     private String descs;
-
+    private String mp4;
     //无参空构造方法
     public Pet() {
+    }
+
+    public String getMp4() {
+        return mp4;
+    }
+
+    public void setMp4(String mp4) {
+        this.mp4 = mp4;
     }
 
     public int getId() {

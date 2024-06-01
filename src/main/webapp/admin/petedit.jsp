@@ -18,7 +18,7 @@
                 <%--文件上传表单--%>
                 <form id="uploadForm" method="post">
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">宠物图片</label>
+                    <label class="col-sm-2 col-form-label">游戏图片</label>
                     <input type="file" id="file" name="file" class="col-sm-4">
                     <input type="button" id="uploadBtn" class="btn btn-primary col-sm-2" value="上传">
                 </div>
