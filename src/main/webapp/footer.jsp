@@ -42,8 +42,8 @@
     let dotsNum = 50 // 点的数量
     let radius = 1 // 圆的半径，连接线宽度的一半
     let fillStyle = 'rgb(168,216,227)' // 点的颜色
-    let lineWidth = radius * 2
-    let connection = 100 // 连线最大距离
+    let lineWidth = radius * 0.3
+    let connection = 70 // 连线最大距离
     let followLength = 60 // 鼠标跟随距离
 
     let dots = []
@@ -188,6 +188,7 @@
     document.onmouseout = mouseOut
     document.onclick = mouseClick
     window.onresize = addCanvasSize
+
 </script>
 </body>
 </html>
