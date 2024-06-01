@@ -186,6 +186,7 @@
 
     document.onmousemove = mouseMove
     document.onmouseout = mouseOut
+
     document.onclick = mouseClick
     window.onresize = addCanvasSize
 
